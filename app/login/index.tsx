@@ -52,12 +52,12 @@ export default function login() {
                 </View>
             </View>
 
-            <View style={style.button}>
-                <MaterialIcons name="logout" size={18} color="white" />
-                <TouchableOpacity>
+            <TouchableOpacity>
+                <View style={style.button}>
+                    <MaterialIcons name="logout" size={18} color="white" />
                     <Text style={style.buttonText}>Login</Text>
-                </TouchableOpacity>
-            </View>
+                </View>
+            </TouchableOpacity>
         </View>
         </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
