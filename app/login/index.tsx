@@ -28,10 +28,10 @@ export default function login() {
         if (user.email === "" ||  user.password === "") {
             return Alert.alert("Preencha todos os campos!")
         }
-        const res = await fetch(`https://6657a36a5c36170526457269.mockapi.io/api/v1/user`)
+        const res = await fetch(`https://6657a36a5c36170526457269.mockapi.io/api/v1/users`)
         const json = await res.json();
 
-        if (json.some((e: user) => e.email === user.email) || json.some((e: user) => e.password === user.password)) {
+        if (json.some((e: user) => e.email === user.email) && json.some((e: user) => e.password === user.password)) {
             Alert.alert("LOGADO 🎉🎉")
         } else {
             Alert.alert("Usuário não encontrado")
