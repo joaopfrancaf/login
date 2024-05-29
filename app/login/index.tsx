@@ -1,10 +1,38 @@
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform } from "react-native";
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, Button, Pressable, Alert} from "react-native";
 import Checkbox from 'expo-checkbox';
 import { Fontisto } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
+import { useState } from "react";
+
+type user = {
+    email: string,
+    password: string
+}
 
 export default function login() {
+    const [user, setUser] = useState<user>({
+        email: "",
+        password: ""
+    })
+
+    function handleChange(name : string, value: string) {
+        setUser(prevUser => ({
+            ...prevUser,
+            [name]: value
+          }));
+    }
+
+    async function handleLogin() {
+        const res = await fetch(`https://6657a36a5c36170526457269.mockapi.io/api/v1/user`)
+        const json = await res.json();
+
+        if (json.some((e: user) => e.email === user.email) || json.some((e: user) => e.password === user.password)) {
+            Alert.alert("LOGADO 🎉🎉")
+        } else {
+            Alert.alert("Usuário não encontrado")
+        }
+    }
 
     return (
 
@@ -30,7 +58,7 @@ export default function login() {
                     <Fontisto name="email" size={18} color="black" style={{
                         paddingHorizontal: 10
                     }}/>
-                    <TextInput style={style.input} placeholder="Email" inputMode={"email"} placeholderTextColor={"#999faa"}/>
+                    <TextInput style={style.input} placeholder="Email" inputMode={"email"} placeholderTextColor={"#999faa"} value={user.email} onChangeText={(value) => handleChange('email', value)}/>
                 </View>
 
                 <View style={{
@@ -43,7 +71,7 @@ export default function login() {
                     <AntDesign name="lock1" size={18} color="black" style={{
                         paddingHorizontal: 10
                     }}/>
-                    <TextInput style={style.input} placeholder="Senha" placeholderTextColor={"#999faa"}/>
+                    <TextInput style={style.input} placeholder="Senha" placeholderTextColor={"#999faa"} value={user.password} onChangeText={(value) => handleChange('password', value)}/>
                 </View>
 
                 <View style={style.checkboxcontainer}>
@@ -52,12 +80,12 @@ export default function login() {
                 </View>
             </View>
 
-            <TouchableOpacity>
+            <Pressable onPress={handleLogin}>
                 <View style={style.button}>
                     <MaterialIcons name="logout" size={18} color="white" />
                     <Text style={style.buttonText}>Login</Text>
                 </View>
-            </TouchableOpacity>
+            </Pressable>
         </View>
         </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
