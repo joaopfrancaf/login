@@ -1,15 +1,20 @@
-import { View, Image, Button, Alert, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { Link } from "expo-router";
+import { View, Image, Text, TouchableOpacity, StyleSheet } from "react-native";
 
 export default function Index() {
   return (
     <View style={style.container}>
+
       <View style={style.divImage}>
           <Image style={style.image} source={require("@/assets/images/logo.png")}/>
       </View>
+
       <View style={style.divbuttom}>
-        <TouchableOpacity style={style.button}>
-          <Text style={style.text}>Iniciar</Text>
-        </TouchableOpacity>
+        <Link replace href="/login" asChild>
+          <TouchableOpacity style={style.button}>
+              <Text style={style.text}>Iniciar</Text>
+          </TouchableOpacity>
+        </Link>
       </View>
     </View>
   );
@@ -40,7 +45,7 @@ const style = StyleSheet.create({
   text: {
     fontSize: 18,
     color: "white",
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   image: {
     resizeMode: "contain",
