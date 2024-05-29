@@ -15,6 +15,7 @@ export default function login() {
         email: "",
         password: ""
     })
+    const [isChecked, setChecked] = useState(false);
 
     function handleChange(name : string, value: string) {
         setUser(prevUser => ({
@@ -24,6 +25,9 @@ export default function login() {
     }
 
     async function handleLogin() {
+        if (user.email === "" ||  user.password === "") {
+            return Alert.alert("Preencha todos os campos!")
+        }
         const res = await fetch(`https://6657a36a5c36170526457269.mockapi.io/api/v1/user`)
         const json = await res.json();
 
@@ -75,7 +79,7 @@ export default function login() {
                 </View>
 
                 <View style={style.checkboxcontainer}>
-                    <Checkbox/>
+                    <Checkbox value={isChecked} onValueChange={setChecked}/>
                     <Text style={style.text1}>Mantenha me conectado</Text>
                 </View>
             </View>
