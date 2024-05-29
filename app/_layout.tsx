@@ -3,11 +3,13 @@ import { Stack } from "expo-router";
 
 export default function RootLayout() {
     return(
-        <Stack screenOptions={{
-            headerShown: false
-        }}
-        >
+        <>
             <StatusBar barStyle={"default"}/>
-        </Stack>
+            <Stack screenOptions={{
+                headerShown: false
+            }}
+            >
+            </Stack>
+        </>
     )
 }

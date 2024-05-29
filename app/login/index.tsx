@@ -1,11 +1,18 @@
-import { StyleSheet, View, Text, TextInput, TouchableOpacityComponent, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform } from "react-native";
 import Checkbox from 'expo-checkbox';
 import { Fontisto } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 
 export default function login() {
+
     return (
+
+        <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            style={style.container}
+        >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={style.container}>
             <View>
                 <Text style={style.text1}>Olá!</Text>
@@ -52,6 +59,8 @@ export default function login() {
                 </TouchableOpacity>
             </View>
         </View>
+        </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
     )
 }
 
