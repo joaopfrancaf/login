@@ -1,9 +1,10 @@
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, Button, Pressable, Alert} from "react-native";
+import { StyleSheet, View, Text, TextInput, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, Pressable, Alert} from "react-native";
 import Checkbox from 'expo-checkbox';
 import { Fontisto } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useState } from "react";
+import Spinner from "react-native-loading-spinner-overlay";
 
 type user = {
     email: string,
@@ -16,6 +17,7 @@ export default function login() {
         password: ""
     })
     const [isChecked, setChecked] = useState(false);
+    const [spinner,setSpinner] = useState(false)
 
     function handleChange(name : string, value: string) {
         setUser(prevUser => ({
@@ -28,8 +30,11 @@ export default function login() {
         if (user.email === "" ||  user.password === "") {
             return Alert.alert("Preencha todos os campos!")
         }
+
+        setSpinner(true)
         const res = await fetch(`https://6657a36a5c36170526457269.mockapi.io/api/v1/users`)
         const json = await res.json();
+        setSpinner(false)
 
         if (json.some((e: user) => e.email === user.email) && json.some((e: user) => e.password === user.password)) {
             Alert.alert("LOGADO 🎉🎉")
@@ -46,6 +51,11 @@ export default function login() {
         >
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={style.container}>
+            <Spinner
+            visible={spinner}
+            textContent={'Carregando'}
+            textStyle={{color: '#FFF'}}
+            />
             <View>
                 <Text style={style.text1}>Olá!</Text>
                 <Text style={style.text2}>Bem-Vindo!</Text>
